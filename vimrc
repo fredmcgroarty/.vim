@@ -26,6 +26,7 @@ call vundle#begin()
 	Plugin 'Shougo/deoplete.nvim'
 	Plugin 'roxma/nvim-yarp'
 	Plugin 'roxma/vim-hug-neovim-rpc'
+	Plugin 'tpope/vim-surround'
 
 	" === Javascript Pluginins === "
 	" Typescript syntax highlighting
