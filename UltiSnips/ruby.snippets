@@ -25,3 +25,15 @@ class ${1:`!v substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`
 	$0
 end
 endsnippet
+
+
+snippet bench  "benchmark"
+	require 'benchmark'
+	Benchmark.bmbm do |results|
+
+	  results.report do
+
+
+	  end
+	end
+endsnippet 

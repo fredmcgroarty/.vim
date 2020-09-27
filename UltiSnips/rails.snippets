@@ -82,36 +82,3 @@ validates_attachment :$1,
 	size: { in: 0..5.megabytes }
 endsnippet
 
-#------------------------------------------------------------------------------
-# Rspec
-
-snippet spec "snippet template" b
-require 'rails_helper'
-
-RSpec.describe ${1:ClassName} do
-	describe '${2:something}' do
-		$0
-	end
-end
-endsnippet
-
-snippet afterall
-after(:all) { DatabaseCleaner.clean_with(:deletion) }
-endsnippet
-
-snippet letbc
-let(:${1:name}) do
-	create(:$1)
-end
-endsnippet
-
-snippet letbs
-let(:stubbed_${1:name}) do
-	build_stubbed(:$1)
-end
-endsnippet
-
-snippet xsc
-expect(response.status).to eq(${1:200})
-endsnippet
-

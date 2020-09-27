@@ -1,32 +1,65 @@
-set number 
-syntax on 
+set number
+syntax on
 filetype plugin indent on
-filetype on  
+filetype on
 filetype indent on
 
 set spelllang=en_gb
 set hidden
 
+autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
+" Remap leader key to ,
+let g:mapleader=','
+
+" Tab navigation like Firefox.
+nnoremap <C-S-tab> :tabprevious<CR>
+nnoremap <C-tab>   :tabnext<CR>
+nnoremap <C-t>     :tabnew<CR>
+inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+inoremap <C-tab>   <Esc>:tabnext<CR>i
+inoremap <C-t>     <Esc>:tabnew<CR>
+
+" switch buffers 
+:nnoremap <Tab> :bnext<CR>
+:nnoremap <S-Tab> :bprevious<CR>
+
+" create new line without entering edit 
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
+
 "auto remove trailing whitespace
-autocmd BufWritePre *.rb :%s/\s\+$//e
+"autocmd BufWritePre *.js, *.jsx :%s/\s\+$//e
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    keepp %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+
+
+:nnoremap <F12> :let &mouse=(empty(&mouse) ? 'a' : '')<CR>
+
+
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ale_completion_enabled = 1
 
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin() 
+call vundle#begin()
 	" === Git Pluginins === "
 	" Enable git changes to be shown in sign column
 	Plugin 'mhinz/vim-signify'
 	Plugin 'tpope/vim-fugitive'
 
-	" auto completion 
-	Plugin 'Shougo/deoplete.nvim'
-	Plugin 'roxma/nvim-yarp'
+	" auto completion
 	Plugin 'roxma/vim-hug-neovim-rpc'
 	Plugin 'tpope/vim-surround'
+        Plugin 'Shougo/deoplete.nvim'
+
 
 	" === Javascript Pluginins === "
 	" Typescript syntax highlighting
@@ -47,9 +80,9 @@ call vundle#begin()
 	" Improved syntax highlighting and indentation
 	Plugin 'othree/yajs.vim'
 
-	" Dictionary 
+	" Dictionary
 	Plugin 'reedes/vim-wordy'
-	
+
 	" Snippets
 	"
 	Plugin 'SirVer/ultisnips'
@@ -58,19 +91,36 @@ call vundle#begin()
 	" === UI === "
 	" File explorer
 	Plugin 'scrooloose/nerdtree'
+	Plugin 'ctrlpvim/ctrlp.vim'
 
-	" Themes 
+	" Themes
 	Plugin 'vim-airline/vim-airline'
 	Plugin 'vim-airline/vim-airline-themes'
 
+	" Run specs in tmux
+	Plugin 'janko-m/vim-test'
+	Plugin 'jgdavey/tslime.vim'
+
+	" switch between vim & tmux pane using ctrl hjkl
+	Plugin 'christoomey/vim-tmux-navigator'
+
+	" SYntax checker
+	Plugin 'dense-analysis/ale'	" SYntax checker Plugin 'dense-analysis/ale'
 call vundle#end()
 
-set mouse=a
+"ALE
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_completion_autoimport = 1
+let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0},'\.rb$': {'ale_enabled': 0}}
+
+let g:airline#extensions#ale#enabled = 1
+
 let g:deoplete#enable_at_startup = 1
 " SETTINGS
+nmap <leader>a :ALEToggleBuffer<CR>
 
-" Remap leader key to ,
-let g:mapleader=','
 
 " Spellchecking etc"
 nmap <silent> <leader>s :set spell!<CR>
@@ -96,6 +146,11 @@ nmap <leader>n :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 
 
+" show/hide line number "
+nmap <leader>l :set invnumber<CR>
+
+
+
 " Ultisnips Stuff
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -106,12 +161,20 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-let g:UltiSnipsSnippetDirectories = ["~/.vim/UltiSnips", "UltiSnips"] 
+let g:UltiSnipsSnippetDirectories = ["~/.vim/UltiSnips", "UltiSnips"]
 
-"CTRLp 
+"CTRLp
 
 " keep ctrl p for autocomplete
 let g:ctrlp_map = '<leader>p'
-
-
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_cmd = 'CtrlPMRU'
+"vim-test settings
+let test#strategy = "tslime"
+let g:test#ruby#use_spring_binstub=1
+nnoremap <leader>tt :TestNearest<cr>
+nnoremap <leader>tf :TestFile<cr>
+nnoremap <leader>ta :TestSuite<cr>
+nnoremap <leader>tl :TestLast<cr>
+nnoremap <leader>tg :TestVisit<cr>
 
