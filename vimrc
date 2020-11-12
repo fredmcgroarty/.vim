@@ -60,6 +60,7 @@ call vundle#begin()
 	Plugin 'tpope/vim-surround'
         Plugin 'Shougo/deoplete.nvim'
 
+	Plugin 'mustache/vim-mustache-handlebars'
 
 	" === Javascript Pluginins === "
 	" Typescript syntax highlighting
@@ -79,6 +80,9 @@ call vundle#begin()
 
 	" Improved syntax highlighting and indentation
 	Plugin 'othree/yajs.vim'
+
+	" Syntax highlighting & other shit for elixir 
+	Plugin 'elixir-editors/vim-elixir'
 
 	" Dictionary
 	Plugin 'reedes/vim-wordy'

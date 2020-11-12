@@ -5,6 +5,10 @@ snippet @
 @${1:var} = $1$0
 endsnippet
 
+snippet gem 
+gem '${1:target}'
+endsnippet
+
 snippet "^(\s*attr_reader .*)" "attr_reader: add another" r
 `!p snip.rv = match.group(1).rstrip(",")`, :$0
 endsnippet
@@ -28,12 +32,10 @@ endsnippet
 
 
 snippet bench  "benchmark"
-	require 'benchmark'
-	Benchmark.bmbm do |results|
+require 'benchmark'
+Benchmark.bmbm do |results|
+  results.report do
 
-	  results.report do
-
-
-	  end
-	end
+  end
+end
 endsnippet 
