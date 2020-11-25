@@ -1,15 +1,14 @@
 set number
+set re=0
 syntax on
 filetype plugin indent on
-filetype on
-filetype indent on
 
 set spelllang=en_gb
 set hidden
 
-autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
-autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
-autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+"autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
+"autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+"autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
 " Remap leader key to ,
 let g:mapleader=','
@@ -17,16 +16,14 @@ let g:mapleader=','
 " Tab navigation like Firefox.
 nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-tab>   :tabnext<CR>
-nnoremap <C-t>     :tabnew<CR>
 inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
 
-" switch buffers 
+" switch buffers
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
 
-" create new line without entering edit 
+" create new line without entering edit
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
@@ -55,6 +52,11 @@ call vundle#begin()
 	Plugin 'mhinz/vim-signify'
 	Plugin 'tpope/vim-fugitive'
 
+	" tags
+	Plugin 'tmm1/ripper-tags'
+	Plugin 'ludovicchabant/vim-gutentags'
+	Plugin 'majutsushi/tagbar'
+
 	" auto completion
 	Plugin 'roxma/vim-hug-neovim-rpc'
 	Plugin 'tpope/vim-surround'
@@ -75,15 +77,12 @@ call vundle#begin()
 	" Syntax highlighting for nginx
 	Plugin 'chr4/nginx.vim'
 
-	" Syntax highlighting for javascript libraries
-	Plugin 'othree/javascript-libraries-syntax.vim'
-
 	" Improved syntax highlighting and indentation
 	Plugin 'othree/yajs.vim'
 
-	" Syntax highlighting & other shit for elixir 
+	" Syntax highlighting & other shit for elixir
+	Plugin 'slashmili/alchemist.vim'
 	Plugin 'elixir-editors/vim-elixir'
-
 	" Dictionary
 	Plugin 'reedes/vim-wordy'
 
@@ -182,3 +181,39 @@ nnoremap <leader>ta :TestSuite<cr>
 nnoremap <leader>tl :TestLast<cr>
 nnoremap <leader>tg :TestVisit<cr>
 
+
+"Ctags
+let g:gutentags_ctags_exclude = ['vendor/*', 'tmp/*', 'log/*', 'coverage/*', 'doc/*']
+"tagbar settings
+let g:tagbar_sort = 0
+if executable('ripper-tags')
+    let g:tagbar_type_ruby = {
+        \ 'kinds'      : ['m:modules',
+                        \ 'c:classes',
+                        \ 'C:constants',
+                        \ 'F:singleton methods',
+                        \ 'f:methods',
+                        \ 'a:aliases'],
+        \ 'kind2scope' : { 'c' : 'class',
+                         \ 'm' : 'class' },
+        \ 'scope2kind' : { 'class' : 'c' },
+        \ 'ctagsbin'   : 'ripper-tags',
+        \ 'ctagsargs'  : ['-f', '-']
+        \ }
+endif
+
+nnoremap <leader>] :TagbarToggle<cr>
+
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+\ }
