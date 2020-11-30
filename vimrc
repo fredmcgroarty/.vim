@@ -10,6 +10,9 @@ autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
 " for jsx files
 autocmd FileType javascriptreact setlocal shiftwidth=2 tabstop=2
 
+set directory=~/.vim/swapfiles//
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
 " Remap leader key to ,
 let g:mapleader=','
 
@@ -35,14 +38,11 @@ fun! <SID>StripTrailingWhitespaces()
     keepp %s/\s\+$//e
     call cursor(l, c)
 endfun
-autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-
+autocmd BufWritePre * %s/\s\+$//e
 
 :nnoremap <F12> :let &mouse=(empty(&mouse) ? 'a' : '')<CR>
 
 
-
-set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ale_completion_enabled = 1
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -59,6 +59,13 @@ call vundle#begin()
 	Plugin 'ludovicchabant/vim-gutentags'
 	Plugin 'majutsushi/tagbar'
 
+
+	" ansible formatter, used for Yaml
+	Plugin 'pearofducks/ansible-vim'
+
+	" Highlighting whitespace
+
+	Plugin 'bronson/vim-trailing-whitespace'
 	" auto completion
 	Plugin 'roxma/vim-hug-neovim-rpc'
 	Plugin 'tpope/vim-surround'
