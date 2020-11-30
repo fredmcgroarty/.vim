@@ -6,9 +6,9 @@ filetype plugin indent on
 set spelllang=en_gb
 set hidden
 
-"autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
-"autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
-"autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
+" for jsx files
+autocmd FileType javascriptreact setlocal shiftwidth=2 tabstop=2
 
 " Remap leader key to ,
 let g:mapleader=','
@@ -52,6 +52,8 @@ call vundle#begin()
 	Plugin 'mhinz/vim-signify'
 	Plugin 'tpope/vim-fugitive'
 
+	Plugin 'tpope/vim-unimpaired'
+	Plugin 'tpope/vim-repeat'
 	" tags
 	Plugin 'tmm1/ripper-tags'
 	Plugin 'ludovicchabant/vim-gutentags'
