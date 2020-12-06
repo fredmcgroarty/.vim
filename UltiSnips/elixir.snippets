@@ -1,0 +1,75 @@
+# To setup
+# Install vim-snippets
+# Place this file in ~/.vim/snippets
+snippet createt "create table"
+	create table(:${1:name}) do
+		${2}
+
+		timestamps()
+	end
+endsnippet
+snippet createi "create index"
+	create index(:${1:name}, [:${2:column_name}])
+
+endsnippet
+snippet col "add column"
+	add :${1:name}, :${2:string}
+
+endsnippet
+snippet colr "add column with reference"
+	add :${1:user}_id, references(:$1s)
+
+endsnippet
+snippet schema "ecto schema"
+	defmodule ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`} do
+		use Ecto.Schema
+
+		schema "${2:table_name}" do
+			${3}
+
+			timestamps()
+		end
+	end
+
+endsnippet
+snippet field "ecto field"
+	field :${1:name}, :${2:string}
+
+endsnippet
+snippet belongs_to "ecto belongs_to assoc"
+	belongs_to :${1:name}, $1
+
+endsnippet
+snippet get "setup route"
+	get "/${1}", ${2:Page}Controller, :${3:index}
+
+endsnippet
+snippet controller "controller"
+	defmodule ${1:Module}.${2:Page}Controller do
+		use $1, :controller
+	end
+
+endsnippet
+snippet action "controller action"
+	def ${1:index}(conn, _params) do
+		render conn, "$1.html"
+	end
+
+endsnippet
+snippet gen_server "create a gen server"
+	defmodule ${1:Name} do
+		use GenServer
+
+		@name __MODULE__
+
+		def start_link do
+			GenServer.start_link(__MODULE__, ${2:[]}, name: @name)
+		end
+
+		def init(state) do
+			{:ok, state}
+		end
+
+		${3}
+	end
+endsnippet
