@@ -1,6 +1,14 @@
 # To setup
 # Install vim-snippets
 # Place this file in ~/.vim/snippets
+snippet bp "binding pry for elixir"
+	require IEx; IEx.pry
+endsnippet
+
+snippet ~U "NaiveDateTime YYYY-MM-DD H:M:SZ"
+~U[`!v strftime("%Y-%m-%d %H:%M:%S")`Z]
+endsnippet
+
 snippet createt "create table"
 	create table(:${1:name}) do
 		${2}

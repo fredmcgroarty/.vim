@@ -23,9 +23,14 @@ Plugin 'majutsushi/tagbar'
 Plugin 'bronson/vim-trailing-whitespace'
 
 " auto completion
-Plugin 'roxma/vim-hug-neovim-rpc'
 Plugin 'tpope/vim-surround'
+if has('nvim')
 Plugin 'Shougo/deoplete.nvim'
+else
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc'
+endif
 Plugin 'mustache/vim-mustache-handlebars'
 
 " === Javascript Pluginins === "
@@ -44,7 +49,7 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'chr4/nginx.vim'
 
 " Improved syntax highlighting and indentation
-Plugin 'othree/yajs.vim'
+"
 Plugin 'ervandew/supertab'
 
 " Syntax highlighting & other shit for elixir
@@ -210,7 +215,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetDirectories = ["~/.vim/UltiSnips", "UltiSnips"]
+let g:UltiSnipsSnippetDirectories = ["~/.vim/UltiSnips"]
 
 "CTRLp
 " keep ctrl p for autocomplete
