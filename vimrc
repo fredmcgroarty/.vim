@@ -6,6 +6,8 @@ let g:ale_completion_enabled = 1
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+
 " Enable git changes to be shown in sign column
 Plugin 'mhinz/vim-signify'
 Plugin 'tpope/vim-fugitive'
@@ -24,15 +26,6 @@ Plugin 'bronson/vim-trailing-whitespace'
 
 " auto completion
 Plugin 'tpope/vim-surround'
-if has('nvim')
-Plugin 'Shougo/deoplete.nvim'
-else
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'roxma/nvim-yarp'
-Plugin 'roxma/vim-hug-neovim-rpc'
-endif
-Plugin 'mustache/vim-mustache-handlebars'
-
 " === Javascript Pluginins === "
 " js/Typescript syntax highlighting
 Plugin 'HerringtonDarkholme/yats.vim'
@@ -50,8 +43,6 @@ Plugin 'chr4/nginx.vim'
 
 " Improved syntax highlighting and indentation
 "
-Plugin 'ervandew/supertab'
-
 " Syntax highlighting & other shit for elixir
 Plugin 'elixir-editors/vim-elixir'
 
@@ -61,6 +52,9 @@ Plugin 'reedes/vim-wordy'
 " Snippets
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+
+Plugin 'elixir-lsp/elixir-ls', { 'do': { -> g:ElixirLS.compile() } }
+Plugin 'dense-analysis/ale'
 
 " File explorer
 Plugin 'scrooloose/nerdtree'
@@ -77,11 +71,13 @@ Plugin 'jgdavey/tslime.vim'
 
 " switch between vim & tmux pane using ctrl hjkl
 Plugin 'christoomey/vim-tmux-navigator'
-
-" SYntax checker
-Plugin 'dense-analysis/ale'	" SYntax checker Plugin 'dense-analysis/ale'
 call vundle#end()
 
+
+let g:coc_global_extensions = ['coc-elixir', 'coc-diagnostic']
+
+set backupdir=~/.vimbackups,/tmp
+set directory=~/.vimbackups,/tmp
 
 set lazyredraw
 set wildmode=list:longest,full   "make cmdline tab completion similar to bash
@@ -116,6 +112,21 @@ set termguicolors
 set spelllang=en_gb
 set directory=~/.vim/swapfiles//
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+set hidden
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 
 " Remap leader key to ,
