@@ -65,6 +65,7 @@ Plugin 'honza/vim-snippets'
 " File explorer
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-projectionist'
 
 " Themes
 Plugin 'vim-airline/vim-airline'
@@ -146,8 +147,9 @@ autocmd BufWritePre * %s/\s\+$//e
 
 :nnoremap <F12> :let &mouse=(empty(&mouse) ? 'a' : '')<CR>
 
-
-
+let g:tslime_autoset_pane = 1
+let g:tslime_always_current_session = 1
+let g:tslime_always_current_window = 1
 "ALE conf"
 let g:ale_completion_autoimport = 1
 
@@ -272,6 +274,9 @@ let g:tagbar_type_typescript = {
   \ ]
 \ }
 
+
+" I can't see the background of the autocomplete menu'"
+highlight Pmenu ctermbg=gray guibg=gray
 
 " air-line
 let g:airline_powerline_fonts = 1

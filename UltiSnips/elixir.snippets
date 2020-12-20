@@ -2,12 +2,32 @@
 # Install vim-snippets
 # Place this file in ~/.vim/snippets
 snippet bp "binding pry for elixir"
-	require IEx; IEx.pry
+require IEx; IEx.pry
 endsnippet
 
 snippet ~U "NaiveDateTime YYYY-MM-DD H:M:SZ"
 ~U[`!v strftime("%Y-%m-%d %H:%M:%S")`Z]
 endsnippet
+
+snippet ~w "list literal"
+~w($1)a
+endsnippet
+
+snippet ofield "optional fields list literal"
+@optional_fields ~w($1)a
+endsnippet
+
+snippet rfield "required fields list literal"
+@required_fields ~w($1)a
+endsnippet
+
+snippet I "IO.inspect()"
+IO.inspect($1))
+endsnippet
+
+
+
+
 
 snippet createt "create table"
 	create table(:${1:name}) do
