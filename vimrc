@@ -74,7 +74,25 @@ Plugin 'christoomey/vim-tmux-navigator'
 call vundle#end()
 
 
+" COC config
 let g:coc_global_extensions = ['coc-elixir', 'coc-diagnostic']
+inoremap <silent><expr> <c-space> coc#refresh()
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 set backupdir=~/.vimbackups,/tmp
 set directory=~/.vimbackups,/tmp
@@ -114,21 +132,6 @@ set directory=~/.vim/swapfiles//
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 set hidden
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-
 " Remap leader key to ,
 let g:mapleader=','
 
@@ -138,9 +141,21 @@ nnoremap <C-tab>   :tabnext<CR>
 inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
 
+"counter number up and down using alt
+nnoremap <A-a> <C-a>
+nnoremap <A-x> <C-x>
+
 " switch buffers
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
+
+"tmux-vim-navigator setup
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <m-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <m-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <m-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <m-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <m-w> :TmuxNavigatePrevious<cr>
 
 " create new line without entering edit
 nmap <S-Enter> O<Esc>
@@ -158,7 +173,6 @@ autocmd BufWritePre * %s/\s\+$//e
 
 :nnoremap <F12> :let &mouse=(empty(&mouse) ? 'a' : '')<CR>
 
-let g:tslime_autoset_pane = 1
 let g:tslime_always_current_session = 1
 let g:tslime_always_current_window = 1
 "ALE conf"
@@ -169,7 +183,9 @@ let g:ale_linters.scss = ['stylelint']
 let g:ale_linters.css = ['stylelint']
 let g:ale_linters.elixir = ['elixir-ls', 'credo']
 let g:ale_linters.ruby = ['rubocop', 'ruby', 'solargraph']
-
+let g:ale_linters = {
+      \   'elixir': ['credo']
+      \ }
 
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
 let g:ale_fixers.javascript = ['eslint', 'prettier']
@@ -321,3 +337,5 @@ let g:airline_symbols.linenr = ''
 
 
 set guifont=DejaVu\ Sans:s12
+
+nnoremap <silent> <leader>co  :<C-u>CocList outline<CR>

@@ -1,10 +1,13 @@
-snippet bp 
+snippet bp
 import code; code.interact(local=dict(globals(), **locals()))
+endsnippet
+
+snippet	pdb
+__import__("pdb").set_trace()
 endsnippet
 
 
 
-
-snippet cl 
+snippet cl
 print('$1target')
 endsnippet

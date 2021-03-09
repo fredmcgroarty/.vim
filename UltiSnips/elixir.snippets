@@ -1,11 +1,60 @@
 # To setup
 # Install vim-snippets
 # Place this file in ~/.vim/snippets
+snippet	tint "Timex.Interal{}"
+interval = Timex.Interval.new(from: ~U[`!v strftime("%Y-%m-%d %H:%M:%S")`Z], until: [hours: $1])
+endsnippet
+
+snippet	akr "alias repo"
+alias Kraken.Repo
+endsnippet
+
+snippet isn "is_nil(t)"
+is_nil($1) $2
+endsnippet
+
+snippet deffa "create factory"
+defmacro __using__(_) do
+  quote do
+    def $1_factory(attrs \\ %{}) do
+      map = %{}
+      merge_attributes(map, attrs)
+    end
+  end
+end
+endsnippet
+
+snippet if "insert factory"
+$1 = insert(:${1})
+endsnippet
+
+snippet bf "build factory"
+$1 = build(:${1})
+endsnippet
+
+snippet modoc "module doc"
+@moduledoc """
+$1
+"""
+endsnippet
+
+
+
+snippet ifl "insert list factory"
+$1 = insert_list($2, :${1})
+endsnippet
+
+
+
+snippet wip "focus on spec"
+@tag :wip
+endsnippet
+
 snippet bp "binding pry for elixir"
 require IEx; IEx.pry
 endsnippet
 
-snippet ~U "NaiveDateTime YYYY-MM-DD H:M:SZ"
+snippet ~U "UDateTime YYYY-MM-DD H:M:SZ"
 ~U[`!v strftime("%Y-%m-%d %H:%M:%S")`Z]
 endsnippet
 
